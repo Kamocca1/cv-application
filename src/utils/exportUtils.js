@@ -316,7 +316,6 @@ export const exportToWord = async (cvData) => {
         const blob = new Blob([htmlContent], {
             type: "application/msword",
         });
-        const url = URL.createObjectURL(blob);
 
         const name = personalInfo[PERSONAL_INFO_FIELDS.NAME] || "CV";
         const filename = `${name.replace(/[^a-zA-Z0-9]/g, "_")}_CV_${
