@@ -1,47 +1,249 @@
+/* ===================================
+   APP COMPONENT STYLES
+   Root component styling and global layout
+   =================================== */
+
+/* Root container */
 #root {
     width: 100%;
     min-height: 100vh;
     margin: 0;
     padding: 0;
+    display: flex;
+    flex-direction: column;
 }
 
+/* Main app container */
 .app {
     width: 100%;
     min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--color-bg-secondary);
 }
 
-.logo {
-    height: 6em;
-    padding: 1.5em;
-    will-change: filter;
-    transition: filter 300ms;
-}
-.logo:hover {
-    filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-    filter: drop-shadow(0 0 2em #61dafbaa);
+/* Theme support */
+.app[data-theme="light"] {
+    --app-bg: var(--color-bg-secondary);
+    --app-text: var(--color-text-primary);
 }
 
-@keyframes logo-spin {
-    from {
-        transform: rotate(0deg);
+.app[data-theme="dark"] {
+    --app-bg: var(--color-bg-dark);
+    --app-text: var(--color-text-inverse);
+}
+
+/* ===================================
+   APP HEADER
+   =================================== */
+.app-header {
+    background-color: var(--color-bg-primary);
+    border-bottom: 1px solid var(--color-border-light);
+    padding: var(--spacing-lg) 0;
+    box-shadow: var(--shadow-sm);
+    position: sticky;
+    top: 0;
+    z-index: var(--z-sticky);
+}
+
+.app-header-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--spacing-lg);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.app-title {
+    font-size: var(--font-size-2xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-primary);
+    margin: 0;
+}
+
+.app-status {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.status-indicator {
+    font-size: var(--font-size-sm);
+    transition: var(--transition-fast);
+}
+
+.status-indicator.online {
+    opacity: 1;
+}
+
+.status-indicator.offline {
+    opacity: 0.7;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%,
+    100% {
+        opacity: 0.7;
     }
-    to {
-        transform: rotate(360deg);
+    50% {
+        opacity: 1;
     }
 }
 
-@media (prefers-reduced-motion: no-preference) {
-    a:nth-of-type(2) .logo {
-        animation: logo-spin infinite 20s linear;
+/* ===================================
+   APP MAIN CONTENT
+   =================================== */
+.app-main {
+    flex: 1;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: var(--spacing-2xl) var(--spacing-lg);
+    display: flex;
+    flex-direction: column;
+}
+
+.cv-builder-main {
+    flex: 1;
+    width: 100%;
+}
+
+/* ===================================
+   APP FOOTER
+   =================================== */
+.app-footer {
+    background-color: var(--color-bg-primary);
+    border-top: 1px solid var(--color-border-light);
+    padding: var(--spacing-lg) 0;
+    margin-top: auto;
+}
+
+.app-footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--spacing-lg);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--spacing-md);
+}
+
+.app-footer-text {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+    margin: 0;
+}
+
+.app-footer-version {
+    font-size: var(--font-size-xs);
+    color: var(--color-text-tertiary);
+    margin: 0;
+}
+
+/* ===================================
+   RESPONSIVE DESIGN
+   =================================== */
+
+/* Mobile devices */
+@media (max-width: 767px) {
+    .app-header-content {
+        padding: 0 var(--spacing-md);
+        flex-direction: column;
+        gap: var(--spacing-md);
+        text-align: center;
+    }
+
+    .app-title {
+        font-size: var(--font-size-xl);
+    }
+
+    .app-main {
+        padding: var(--spacing-lg) var(--spacing-md);
+    }
+
+    .app-footer-content {
+        padding: 0 var(--spacing-md);
+        flex-direction: column;
+        text-align: center;
+        gap: var(--spacing-sm);
     }
 }
 
-.card {
-    padding: 2em;
+/* Tablet devices */
+@media (min-width: 768px) and (max-width: 1023px) {
+    .app-header-content {
+        padding: 0 var(--spacing-xl);
+    }
+
+    .app-main {
+        padding: var(--spacing-2xl) var(--spacing-xl);
+    }
+
+    .app-footer-content {
+        padding: 0 var(--spacing-xl);
+    }
 }
 
-.read-the-docs {
-    color: #888;
+/* Large desktop */
+@media (min-width: 1440px) {
+    .app-main {
+        max-width: 1400px;
+        padding: var(--spacing-3xl) var(--spacing-2xl);
+    }
+}
+
+/* ===================================
+   ACCESSIBILITY ENHANCEMENTS
+   =================================== */
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    .app-header {
+        border-bottom-width: 2px;
+    }
+
+    .app-footer {
+        border-top-width: 2px;
+    }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+    .status-indicator.offline {
+        animation: none;
+    }
+
+    * {
+        transition: none !important;
+    }
+}
+
+/* Focus management for keyboard navigation */
+.app-header:focus-within,
+.app-main:focus-within,
+.app-footer:focus-within {
+    outline: 2px solid var(--color-primary);
+    outline-offset: -2px;
+}
+
+/* ===================================
+   PRINT STYLES
+   =================================== */
+@media print {
+    .app-header,
+    .app-footer {
+        display: none;
+    }
+
+    .app {
+        background: white;
+    }
+
+    .app-main {
+        padding: 0;
+        max-width: none;
+    }
 }
