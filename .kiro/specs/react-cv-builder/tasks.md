@@ -42,7 +42,7 @@
     -   Write unit tests for EditableSection behavior
     -   _Requirements: 4.1, 4.2, 4.3, 4.4, 5.4_
 
--   [-] 6. Implement PersonalInfo component
+-   [x] 6. Implement PersonalInfo component
 
     -   Create PersonalInfo component using EditableSection HOC
     -   Add form fields for name, email, and phone number
