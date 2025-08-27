@@ -1,0 +1,108 @@
+/* CV Preview Styles - Print-ready formatting */
+
+.cvPreview {
+    background-color: #ffffff;
+    color: #000000;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+        0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    font-family: Georgia, "Times New Roman", serif;
+    line-height: 1.6;
+    max-width: 8.5in;
+    min-height: 11in;
+    margin: 2rem auto;
+    border: 1px solid #e5e7eb;
+    padding: 2rem;
+}
+
+.cvTitle {
+    color: #000000;
+    margin-bottom: 0.5rem;
+    font-size: 2rem;
+    font-weight: bold;
+    text-align: center;
+    border-bottom: 2px solid #000000;
+    padding-bottom: 0.5rem;
+}
+
+.sectionTitle {
+    color: #000000;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid #666666;
+    padding-bottom: 0.25rem;
+}
+
+.section {
+    margin-bottom: 2rem;
+}
+
+.fieldLabel {
+    font-weight: bold;
+    color: #000000;
+}
+
+.fieldValue {
+    color: #333333;
+}
+
+.responsibilitiesText {
+    color: #333333;
+    margin-top: 0.5rem;
+    padding-left: 1rem;
+    white-space: pre-wrap;
+}
+
+.emptyState {
+    text-align: center;
+    color: #666666;
+    font-style: italic;
+    margin-top: 4rem;
+}
+
+/* Print styles */
+@media print {
+    .cvPreview {
+        box-shadow: none;
+        border: none;
+        border-radius: 0;
+        margin: 0;
+        padding: 1in;
+        max-width: none;
+        min-height: auto;
+    }
+
+    .cvTitle {
+        font-size: 1.8rem;
+    }
+
+    .sectionTitle {
+        font-size: 1.3rem;
+        page-break-after: avoid;
+    }
+
+    .section {
+        page-break-inside: avoid;
+    }
+}
+
+/* Ensure good contrast for screen readers */
+@media (prefers-contrast: high) {
+    .cvPreview {
+        border: 2px solid #000000;
+    }
+
+    .cvTitle,
+    .sectionTitle {
+        border-bottom-width: 3px;
+    }
+}
+
+/* Dark mode adjustments for the preview (keep it print-like) */
+@media (prefers-color-scheme: dark) {
+    .cvPreview {
+        /* Keep white background for print preview even in dark mode */
+        background-color: #ffffff;
+        color: #000000;
+    }
+}

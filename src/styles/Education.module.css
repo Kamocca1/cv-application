@@ -1,0 +1,274 @@
+/* Education Component Styles */
+
+.education {
+    width: 100%;
+}
+
+.displayView {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xl);
+}
+
+.educationList {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+}
+
+.educationItem {
+    padding: var(--spacing-lg);
+    border: 1px solid var(--color-border-light);
+    border-radius: var(--border-radius-md);
+    background-color: var(--color-bg-secondary);
+    transition: all var(--transition-fast);
+}
+
+.educationItem:hover {
+    border-color: var(--color-border-medium);
+    box-shadow: var(--shadow-sm);
+}
+
+.educationHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: var(--spacing-sm);
+}
+
+.schoolName {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-primary);
+    margin: 0;
+}
+
+.dateRange {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+    font-weight: var(--font-weight-medium);
+    white-space: nowrap;
+}
+
+.titleOfStudy {
+    font-size: var(--font-size-base);
+    color: var(--color-text-secondary);
+    font-style: italic;
+    margin: 0;
+}
+
+.editForm {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xl);
+}
+
+.educationEntries {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+}
+
+.educationEntry {
+    padding: var(--spacing-lg);
+    border: 1px solid var(--color-border-light);
+    border-radius: var(--border-radius-md);
+    background-color: var(--color-bg-secondary);
+    position: relative;
+}
+
+.entryHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-lg);
+}
+
+.entryTitle {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-primary);
+    margin: 0;
+}
+
+.removeButton {
+    padding: var(--spacing-xs) var(--spacing-sm);
+    background-color: var(--color-error);
+    color: var(--color-text-inverse);
+    border-radius: var(--border-radius-sm);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-medium);
+    transition: background-color var(--transition-fast);
+}
+
+.removeButton:hover {
+    background-color: #dc2626;
+}
+
+.entryFields {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--spacing-lg);
+}
+
+.dateFields {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-lg);
+}
+
+.addButton {
+    padding: var(--spacing-lg);
+    border: 2px dashed var(--color-border-medium);
+    border-radius: var(--border-radius-md);
+    background-color: transparent;
+    color: var(--color-text-secondary);
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-medium);
+    transition: all var(--transition-fast);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-sm);
+}
+
+.addButton:hover {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+    background-color: var(--color-primary-light);
+}
+
+.addIcon {
+    font-size: var(--font-size-lg);
+}
+
+.formActions {
+    display: flex;
+    gap: var(--spacing-sm);
+    justify-content: flex-end;
+    margin-top: var(--spacing-lg);
+    padding-top: var(--spacing-lg);
+    border-top: 1px solid var(--color-border-light);
+}
+
+.emptyState {
+    text-align: center;
+    padding: var(--spacing-4xl);
+    color: var(--color-text-tertiary);
+}
+
+.emptyStateIcon {
+    font-size: var(--font-size-4xl);
+    margin-bottom: var(--spacing-lg);
+    opacity: 0.5;
+}
+
+.emptyStateText {
+    font-size: var(--font-size-lg);
+    margin-bottom: var(--spacing-sm);
+}
+
+.emptyStateSubtext {
+    font-size: var(--font-size-base);
+}
+
+/* Responsive Design */
+@media (min-width: 768px) {
+    .educationHeader {
+        align-items: center;
+    }
+
+    .entryFields {
+        grid-template-columns: 2fr 1fr;
+        align-items: end;
+    }
+
+    .dateFields {
+        grid-column: 2;
+    }
+}
+
+@media (min-width: 1024px) {
+    .educationList {
+        gap: var(--spacing-xl);
+    }
+
+    .educationItem {
+        padding: var(--spacing-xl);
+    }
+
+    .entryFields {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+
+    .dateFields {
+        grid-column: 3;
+        grid-template-columns: 1fr;
+        gap: var(--spacing-sm);
+    }
+}
+
+/* Print Styles */
+@media print {
+    .education {
+        page-break-inside: avoid;
+    }
+
+    .educationItem {
+        border: none;
+        background: none;
+        padding: var(--spacing-sm) 0;
+        border-bottom: 1px solid #ccc;
+    }
+
+    .educationItem:last-child {
+        border-bottom: none;
+    }
+
+    .schoolName {
+        font-weight: bold;
+    }
+
+    .dateRange {
+        color: #666;
+    }
+}
+
+/* Animation */
+.educationItem,
+.educationEntry {
+    animation: fadeInUp var(--transition-normal) ease-out;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .educationItem,
+    .educationEntry {
+        animation: none;
+    }
+}
+
+/* Accessibility */
+.removeButton:focus,
+.addButton:focus {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+}
+
+@media (prefers-contrast: high) {
+    .educationItem,
+    .educationEntry {
+        border-width: 2px;
+    }
+}

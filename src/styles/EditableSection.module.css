@@ -1,0 +1,327 @@
+/* EditableSection HOC Styles */
+
+.editableSection {
+    width: 100%;
+    position: relative;
+}
+
+.sectionWrapper {
+    transition: all var(--transition-normal);
+}
+
+.editingMode {
+    border: 2px solid var(--color-primary-light);
+    border-radius: var(--border-radius-lg);
+    background-color: var(--color-bg-primary);
+}
+
+.displayMode {
+    border: 1px solid transparent;
+    border-radius: var(--border-radius-lg);
+}
+
+.sectionHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-xl);
+    padding-bottom: var(--spacing-lg);
+    border-bottom: 2px solid var(--color-border-light);
+}
+
+.sectionTitle {
+    font-size: var(--font-size-2xl);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-primary);
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.sectionIcon {
+    font-size: var(--font-size-xl);
+    opacity: 0.7;
+}
+
+.sectionActions {
+    display: flex;
+    gap: var(--spacing-sm);
+    align-items: center;
+}
+
+.actionButton {
+    padding: var(--spacing-sm) var(--spacing-lg);
+    border-radius: var(--border-radius-md);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    transition: all var(--transition-fast);
+    cursor: pointer;
+    border: 1px solid transparent;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    min-height: 36px;
+}
+
+.editButton {
+    background-color: var(--color-primary);
+    color: var(--color-text-inverse);
+}
+
+.editButton:hover {
+    background-color: var(--color-primary-hover);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-sm);
+}
+
+.submitButton {
+    background-color: var(--color-success);
+    color: var(--color-text-inverse);
+}
+
+.submitButton:hover {
+    background-color: #059669;
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-sm);
+}
+
+.submitButton:disabled {
+    background-color: var(--color-secondary);
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+    opacity: 0.6;
+}
+
+.cancelButton {
+    background-color: transparent;
+    color: var(--color-text-secondary);
+    border: 1px solid var(--color-border-medium);
+}
+
+.cancelButton:hover {
+    background-color: var(--color-bg-tertiary);
+    color: var(--color-text-primary);
+    border-color: var(--color-border-dark);
+}
+
+.buttonIcon {
+    font-size: var(--font-size-sm);
+}
+
+.sectionContent {
+    position: relative;
+    min-height: 100px;
+}
+
+.contentWrapper {
+    animation: fadeIn var(--transition-normal) ease-out;
+}
+
+.loadingOverlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(255, 255, 255, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: var(--border-radius-md);
+    z-index: var(--z-dropdown);
+}
+
+.loadingSpinner {
+    width: 32px;
+    height: 32px;
+    border: 3px solid var(--color-border-light);
+    border-top: 3px solid var(--color-primary);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.validationSummary {
+    margin-bottom: var(--spacing-lg);
+    padding: var(--spacing-lg);
+    background-color: var(--color-error-light);
+    border: 1px solid var(--color-error);
+    border-radius: var(--border-radius-md);
+    color: var(--color-error);
+}
+
+.validationTitle {
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-semibold);
+    margin-bottom: var(--spacing-sm);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+}
+
+.validationList {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.validationItem {
+    font-size: var(--font-size-sm);
+    margin-bottom: var(--spacing-xs);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+}
+
+.validationItem::before {
+    content: "•";
+    color: var(--color-error);
+    font-weight: bold;
+}
+
+.statusIndicator {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    font-size: var(--font-size-xs);
+    color: var(--color-text-tertiary);
+    margin-left: auto;
+}
+
+.statusDot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: var(--color-secondary);
+}
+
+.statusDot.editing {
+    background-color: var(--color-warning);
+    animation: pulse 2s infinite;
+}
+
+.statusDot.saved {
+    background-color: var(--color-success);
+}
+
+@keyframes pulse {
+    0%,
+    100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 767px) {
+    .sectionHeader {
+        flex-direction: column;
+        align-items: stretch;
+        gap: var(--spacing-lg);
+    }
+
+    .sectionActions {
+        justify-content: center;
+    }
+
+    .actionButton {
+        flex: 1;
+        justify-content: center;
+        padding: var(--spacing-md) var(--spacing-lg);
+        min-height: 44px; /* Touch-friendly */
+    }
+}
+
+@media (min-width: 768px) {
+    .sectionHeader {
+        align-items: center;
+    }
+
+    .sectionActions {
+        flex-shrink: 0;
+    }
+}
+
+/* Print Styles */
+@media print {
+    .sectionActions,
+    .statusIndicator,
+    .validationSummary {
+        display: none !important;
+    }
+
+    .editableSection {
+        page-break-inside: avoid;
+    }
+
+    .sectionHeader {
+        border-bottom: 2px solid #000;
+        margin-bottom: var(--spacing-lg);
+    }
+
+    .sectionTitle {
+        font-size: var(--font-size-xl);
+        color: #000;
+    }
+}
+
+/* Animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Accessibility */
+.actionButton:focus {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .actionButton,
+    .contentWrapper,
+    .statusDot,
+    .loadingSpinner {
+        animation: none;
+        transition: none;
+    }
+}
+
+@media (prefers-contrast: high) {
+    .editingMode {
+        border-width: 3px;
+    }
+
+    .actionButton {
+        border-width: 2px;
+    }
+
+    .validationSummary {
+        border-width: 2px;
+    }
+}
+
+/* Dark theme adjustments */
+@media (prefers-color-scheme: dark) {
+    .loadingOverlay {
+        background-color: rgba(17, 24, 39, 0.8);
+    }
+}

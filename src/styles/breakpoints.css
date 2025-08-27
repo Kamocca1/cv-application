@@ -1,0 +1,202 @@
+/* Responsive Breakpoint System */
+
+/* Mobile First Approach - Base styles are for mobile */
+
+/* Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) {
+    .container {
+        max-width: 540px;
+    }
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+    .container {
+        max-width: 720px;
+    }
+
+    /* Tablet-specific layout adjustments */
+    .tablet-two-column {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: var(--spacing-2xl);
+    }
+
+    .tablet-hide {
+        display: none;
+    }
+
+    .tablet-show {
+        display: block;
+    }
+}
+
+/* Large devices (desktops, 1024px and up) */
+@media (min-width: 1024px) {
+    .container {
+        max-width: 960px;
+    }
+
+    /* Desktop-specific layout adjustments */
+    .desktop-sidebar-layout {
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+        gap: var(--spacing-4xl);
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: var(--spacing-3xl);
+    }
+
+    .desktop-three-column {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: var(--spacing-2xl);
+    }
+
+    .desktop-hide {
+        display: none;
+    }
+
+    .desktop-show {
+        display: block;
+    }
+}
+
+/* Extra large devices (large desktops, 1440px and up) */
+@media (min-width: 1440px) {
+    .container {
+        max-width: 1320px;
+    }
+
+    .large-desktop-layout {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: var(--spacing-4xl);
+    }
+}
+
+/* Responsive Typography */
+@media (max-width: 767px) {
+    /* Mobile typography adjustments */
+    .responsive-title {
+        font-size: var(--font-size-2xl);
+        line-height: var(--line-height-tight);
+    }
+
+    .responsive-subtitle {
+        font-size: var(--font-size-lg);
+    }
+
+    .responsive-body {
+        font-size: var(--font-size-base);
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+    /* Tablet typography adjustments */
+    .responsive-title {
+        font-size: var(--font-size-3xl);
+        line-height: var(--line-height-tight);
+    }
+
+    .responsive-subtitle {
+        font-size: var(--font-size-xl);
+    }
+
+    .responsive-body {
+        font-size: var(--font-size-lg);
+    }
+}
+
+@media (min-width: 1024px) {
+    /* Desktop typography adjustments */
+    .responsive-title {
+        font-size: var(--font-size-4xl);
+        line-height: var(--line-height-tight);
+    }
+
+    .responsive-subtitle {
+        font-size: var(--font-size-2xl);
+    }
+
+    .responsive-body {
+        font-size: var(--font-size-lg);
+    }
+}
+
+/* Responsive Spacing */
+@media (max-width: 767px) {
+    .responsive-padding {
+        padding: var(--spacing-lg);
+    }
+
+    .responsive-margin {
+        margin: var(--spacing-lg);
+    }
+
+    .responsive-gap {
+        gap: var(--spacing-lg);
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+    .responsive-padding {
+        padding: var(--spacing-2xl);
+    }
+
+    .responsive-margin {
+        margin: var(--spacing-2xl);
+    }
+
+    .responsive-gap {
+        gap: var(--spacing-2xl);
+    }
+}
+
+@media (min-width: 1024px) {
+    .responsive-padding {
+        padding: var(--spacing-3xl);
+    }
+
+    .responsive-margin {
+        margin: var(--spacing-3xl);
+    }
+
+    .responsive-gap {
+        gap: var(--spacing-3xl);
+    }
+}
+
+/* Touch-friendly sizing for mobile */
+@media (max-width: 767px) {
+    .touch-target {
+        min-height: 44px;
+        min-width: 44px;
+        padding: var(--spacing-md);
+    }
+
+    .touch-button {
+        padding: var(--spacing-md) var(--spacing-xl);
+        font-size: var(--font-size-base);
+        min-height: 44px;
+    }
+}
+
+/* Print styles */
+@media print {
+    .print-hide {
+        display: none !important;
+    }
+
+    .print-show {
+        display: block !important;
+    }
+
+    .container,
+    .desktop-sidebar-layout,
+    .large-desktop-layout {
+        max-width: none;
+        margin: 0;
+        padding: 0;
+    }
+}

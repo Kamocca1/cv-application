@@ -1,0 +1,382 @@
+/* WorkExperience Component Styles */
+
+.workExperience {
+    width: 100%;
+}
+
+.displayView {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xl);
+}
+
+.experienceList {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+}
+
+.experienceItem {
+    padding: var(--spacing-lg);
+    border: 1px solid var(--color-border-light);
+    border-radius: var(--border-radius-md);
+    background-color: var(--color-bg-secondary);
+    transition: all var(--transition-fast);
+    position: relative;
+}
+
+.experienceItem:hover {
+    border-color: var(--color-border-medium);
+    box-shadow: var(--shadow-sm);
+}
+
+.currentJobBadge {
+    position: absolute;
+    top: var(--spacing-sm);
+    right: var(--spacing-sm);
+    background-color: var(--color-success);
+    color: var(--color-text-inverse);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: var(--border-radius-sm);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-semibold);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.experienceHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: var(--spacing-sm);
+    padding-right: var(--spacing-4xl); /* Space for current job badge */
+}
+
+.positionTitle {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-primary);
+    margin: 0;
+}
+
+.companyName {
+    font-size: var(--font-size-base);
+    color: var(--color-text-secondary);
+    font-weight: var(--font-weight-medium);
+    margin: var(--spacing-xs) 0;
+}
+
+.dateRange {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+    font-weight: var(--font-weight-medium);
+    white-space: nowrap;
+}
+
+.responsibilities {
+    margin-top: var(--spacing-lg);
+    padding-top: var(--spacing-lg);
+    border-top: 1px solid var(--color-border-light);
+}
+
+.responsibilitiesTitle {
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: var(--spacing-sm);
+}
+
+.responsibilitiesText {
+    font-size: var(--font-size-base);
+    color: var(--color-text-primary);
+    line-height: var(--line-height-relaxed);
+    white-space: pre-wrap;
+}
+
+.editForm {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xl);
+}
+
+.experienceEntries {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+}
+
+.experienceEntry {
+    padding: var(--spacing-lg);
+    border: 1px solid var(--color-border-light);
+    border-radius: var(--border-radius-md);
+    background-color: var(--color-bg-secondary);
+    position: relative;
+}
+
+.entryHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-lg);
+}
+
+.entryTitle {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-primary);
+    margin: 0;
+}
+
+.removeButton {
+    padding: var(--spacing-xs) var(--spacing-sm);
+    background-color: var(--color-error);
+    color: var(--color-text-inverse);
+    border-radius: var(--border-radius-sm);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-medium);
+    transition: background-color var(--transition-fast);
+}
+
+.removeButton:hover {
+    background-color: #dc2626;
+}
+
+.entryFields {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--spacing-lg);
+}
+
+.basicFields {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--spacing-lg);
+}
+
+.dateFields {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-lg);
+}
+
+.currentJobField {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    margin-top: var(--spacing-sm);
+}
+
+.currentJobCheckbox {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--color-primary);
+}
+
+.currentJobLabel {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+    cursor: pointer;
+}
+
+.responsibilitiesField {
+    grid-column: 1 / -1;
+}
+
+.addButton {
+    padding: var(--spacing-lg);
+    border: 2px dashed var(--color-border-medium);
+    border-radius: var(--border-radius-md);
+    background-color: transparent;
+    color: var(--color-text-secondary);
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-medium);
+    transition: all var(--transition-fast);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-sm);
+}
+
+.addButton:hover {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+    background-color: var(--color-primary-light);
+}
+
+.addIcon {
+    font-size: var(--font-size-lg);
+}
+
+.formActions {
+    display: flex;
+    gap: var(--spacing-sm);
+    justify-content: flex-end;
+    margin-top: var(--spacing-lg);
+    padding-top: var(--spacing-lg);
+    border-top: 1px solid var(--color-border-light);
+}
+
+.emptyState {
+    text-align: center;
+    padding: var(--spacing-4xl);
+    color: var(--color-text-tertiary);
+}
+
+.emptyStateIcon {
+    font-size: var(--font-size-4xl);
+    margin-bottom: var(--spacing-lg);
+    opacity: 0.5;
+}
+
+.emptyStateText {
+    font-size: var(--font-size-lg);
+    margin-bottom: var(--spacing-sm);
+}
+
+.emptyStateSubtext {
+    font-size: var(--font-size-base);
+}
+
+/* Responsive Design */
+@media (min-width: 768px) {
+    .experienceHeader {
+        align-items: center;
+    }
+
+    .basicFields {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .entryFields {
+        grid-template-columns: 1fr 1fr;
+        align-items: start;
+    }
+
+    .dateFields {
+        grid-column: 2;
+        grid-template-columns: 1fr;
+        gap: var(--spacing-sm);
+    }
+
+    .currentJobField {
+        grid-column: 2;
+        justify-self: start;
+    }
+}
+
+@media (min-width: 1024px) {
+    .experienceList {
+        gap: var(--spacing-xl);
+    }
+
+    .experienceItem {
+        padding: var(--spacing-xl);
+    }
+
+    .basicFields {
+        grid-template-columns: 2fr 1fr;
+    }
+
+    .entryFields {
+        grid-template-columns: 2fr 1fr 1fr;
+    }
+
+    .dateFields {
+        grid-column: 2;
+    }
+
+    .currentJobField {
+        grid-column: 3;
+    }
+}
+
+/* Print Styles */
+@media print {
+    .workExperience {
+        page-break-inside: avoid;
+    }
+
+    .experienceItem {
+        border: none;
+        background: none;
+        padding: var(--spacing-sm) 0;
+        border-bottom: 1px solid #ccc;
+        page-break-inside: avoid;
+    }
+
+    .experienceItem:last-child {
+        border-bottom: none;
+    }
+
+    .currentJobBadge {
+        position: static;
+        display: inline-block;
+        margin-left: var(--spacing-sm);
+        background-color: #000;
+        color: #fff;
+    }
+
+    .positionTitle {
+        font-weight: bold;
+    }
+
+    .companyName,
+    .dateRange {
+        color: #666;
+    }
+
+    .responsibilities {
+        margin-top: var(--spacing-sm);
+        padding-top: var(--spacing-sm);
+    }
+
+    .responsibilitiesText {
+        font-size: var(--font-size-sm);
+    }
+}
+
+/* Animation */
+.experienceItem,
+.experienceEntry {
+    animation: fadeInUp var(--transition-normal) ease-out;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .experienceItem,
+    .experienceEntry {
+        animation: none;
+    }
+}
+
+/* Accessibility */
+.removeButton:focus,
+.addButton:focus,
+.currentJobCheckbox:focus {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+}
+
+@media (prefers-contrast: high) {
+    .experienceItem,
+    .experienceEntry {
+        border-width: 2px;
+    }
+
+    .currentJobBadge {
+        border: 2px solid var(--color-success);
+    }
+}
