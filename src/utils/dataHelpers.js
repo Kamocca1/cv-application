@@ -172,18 +172,35 @@ export const deepClone = (obj) => {
 };
 
 /**
- * Checks if two objects are equal (shallow comparison)
- * @param {Object} obj1 - First object
- * @param {Object} obj2 - Second object
+ * Checks if two objects are equal (deep comparison)
+ * @param {any} obj1 - First object
+ * @param {any} obj2 - Second object
  * @returns {boolean} True if objects are equal
  */
 export const isEqual = (obj1, obj2) => {
-    const keys1 = Object.keys(obj1);
-    const keys2 = Object.keys(obj2);
+    // Handle primitive types and null/undefined
+    if (obj1 === obj2) return true;
+    if (obj1 == null || obj2 == null) return obj1 === obj2;
+    if (typeof obj1 !== typeof obj2) return false;
 
-    if (keys1.length !== keys2.length) {
-        return false;
+    // Handle arrays
+    if (Array.isArray(obj1)) {
+        if (!Array.isArray(obj2) || obj1.length !== obj2.length) return false;
+        return obj1.every((item, index) => isEqual(item, obj2[index]));
     }
 
-    return keys1.every((key) => obj1[key] === obj2[key]);
+    // Handle objects
+    if (typeof obj1 === "object") {
+        const keys1 = Object.keys(obj1);
+        const keys2 = Object.keys(obj2);
+
+        if (keys1.length !== keys2.length) return false;
+
+        return keys1.every(
+            (key) => keys2.includes(key) && isEqual(obj1[key], obj2[key])
+        );
+    }
+
+    // Handle primitives
+    return obj1 === obj2;
 };

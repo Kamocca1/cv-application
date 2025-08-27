@@ -32,6 +32,10 @@
     --color-warning: #f59e0b;
     --color-error: #ef4444;
     --color-error-light: #fef2f2;
+    --color-error-dark: #dc2626;
+    --color-warning-light: #fef3c7;
+    --color-warning-dark: #d97706;
+    --color-primary-dark: #1d4ed8;
 
     /* Background Colors */
     --color-bg-primary: #ffffff;

@@ -1,182 +1,83 @@
-import React, { useState, useEffect, useCallback, useMemo } from "react";
+import React, { useState, useCallback, useMemo, useRef } from "react";
 import PropTypes from "prop-types";
 import PersonalInfo from "./PersonalInfo.jsx";
 import Education from "./Education.jsx";
 import WorkExperience from "./WorkExperience.jsx";
+import CVPreview from "./CVPreview.jsx";
 import { DEFAULT_CV_DATA, SECTIONS } from "../models/dataTypes.js";
-import { deepClone } from "../utils/dataHelpers.js";
+import { exportToPDF, exportToWord } from "../utils/exportUtils.js";
 import styles from "../styles/CVBuilder.module.css";
 
 /**
  * CVBuilder Container Component
- * Manages overall CV state, data persistence, and coordinates between sections
+ * Simple CV builder that manages state in memory with export functionality
  */
-const CVBuilder = ({
-    className = "",
-    onDataChange,
-    autoSave = true,
-    autoSaveDelay = 2000,
-}) => {
-    // Main CV data state
+const CVBuilder = ({ className = "", onDataChange }) => {
+    // Simple in-memory state management
     const [cvData, setCvData] = useState(DEFAULT_CV_DATA);
 
-    // Loading and error states
-    const [isLoading, setIsLoading] = useState(true);
-    const [saveError, setSaveError] = useState(null);
-    const [lastSaved, setLastSaved] = useState(null);
-
-    // Auto-save timeout reference
-    const [autoSaveTimeout, setAutoSaveTimeout] = useState(null);
-
-    // localStorage key for data persistence
-    const STORAGE_KEY = "cv-builder-data";
-
-    /**
-     * Load CV data from localStorage
-     */
-    const loadFromStorage = useCallback(() => {
-        try {
-            const savedData = localStorage.getItem(STORAGE_KEY);
-            if (savedData) {
-                const parsedData = JSON.parse(savedData);
-
-                // Validate the structure and merge with defaults
-                const validatedData = {
-                    ...DEFAULT_CV_DATA,
-                    ...parsedData,
-                    // Ensure arrays exist
-                    [SECTIONS.EDUCATION]: Array.isArray(
-                        parsedData[SECTIONS.EDUCATION]
-                    )
-                        ? parsedData[SECTIONS.EDUCATION]
-                        : [],
-                    [SECTIONS.WORK_EXPERIENCE]: Array.isArray(
-                        parsedData[SECTIONS.WORK_EXPERIENCE]
-                    )
-                        ? parsedData[SECTIONS.WORK_EXPERIENCE]
-                        : [],
-                    // Ensure personal info object exists
-                    [SECTIONS.PERSONAL_INFO]: {
-                        ...DEFAULT_CV_DATA[SECTIONS.PERSONAL_INFO],
-                        ...(parsedData[SECTIONS.PERSONAL_INFO] || {}),
-                    },
-                };
-
-                setCvData(validatedData);
-                setLastSaved(new Date());
-                return true;
-            }
-        } catch (error) {
-            console.error("Error loading CV data from localStorage:", error);
-            setSaveError("Failed to load saved data. Starting with empty CV.");
-        }
-        return false;
-    }, []);
-
-    /**
-     * Save CV data to localStorage
-     */
-    const saveToStorage = useCallback(
-        async (dataToSave = cvData) => {
-            try {
-                setSaveError(null);
-                const dataString = JSON.stringify(dataToSave);
-                localStorage.setItem(STORAGE_KEY, dataString);
-                setLastSaved(new Date());
-
-                // Notify parent component of data change
-                if (onDataChange) {
-                    onDataChange(dataToSave);
-                }
-
-                return true;
-            } catch (error) {
-                console.error("Error saving CV data to localStorage:", error);
-                setSaveError("Failed to save data. Your changes may be lost.");
-                return false;
-            }
-        },
-        [cvData, onDataChange]
-    );
-
-    /**
-     * Initialize component - load data from storage
-     */
-    useEffect(() => {
-        const dataLoaded = loadFromStorage();
-        if (!dataLoaded) {
-            // If no data was loaded, save the default data
-            saveToStorage(DEFAULT_CV_DATA);
-        }
-        setIsLoading(false);
-    }, [loadFromStorage, saveToStorage]);
-
-    /**
-     * Auto-save functionality
-     */
-    useEffect(() => {
-        if (!autoSave || isLoading) return;
-
-        // Clear existing timeout
-        if (autoSaveTimeout) {
-            clearTimeout(autoSaveTimeout);
-        }
-
-        // Set new timeout for auto-save
-        const timeout = setTimeout(() => {
-            saveToStorage();
-        }, autoSaveDelay);
-
-        setAutoSaveTimeout(timeout);
-
-        // Cleanup timeout on unmount or dependency change
-        return () => {
-            if (timeout) {
-                clearTimeout(timeout);
-            }
-        };
-    }, [cvData, autoSave, autoSaveDelay, isLoading, saveToStorage]);
+    // Ref to access the CV preview element for PDF export
+    const previewRef = useRef(null);
 
     /**
      * Handle personal info updates
      */
-    const handlePersonalInfoUpdate = useCallback((personalInfoData) => {
-        setCvData((prevData) => ({
-            ...prevData,
-            [SECTIONS.PERSONAL_INFO]: personalInfoData,
-        }));
-    }, []);
+    const handlePersonalInfoUpdate = useCallback(
+        (personalInfoData) => {
+            setCvData((prevData) => {
+                const newData = {
+                    ...prevData,
+                    [SECTIONS.PERSONAL_INFO]: personalInfoData,
+                };
+                if (onDataChange) {
+                    onDataChange(newData);
+                }
+                return newData;
+            });
+        },
+        [onDataChange]
+    );
 
     /**
      * Handle education updates
      */
-    const handleEducationUpdate = useCallback((educationData) => {
-        setCvData((prevData) => ({
-            ...prevData,
-            [SECTIONS.EDUCATION]: educationData,
-        }));
-    }, []);
+    const handleEducationUpdate = useCallback(
+        (educationData) => {
+            setCvData((prevData) => {
+                const newData = {
+                    ...prevData,
+                    [SECTIONS.EDUCATION]: educationData,
+                };
+                if (onDataChange) {
+                    onDataChange(newData);
+                }
+                return newData;
+            });
+        },
+        [onDataChange]
+    );
 
     /**
      * Handle work experience updates
      */
-    const handleWorkExperienceUpdate = useCallback((workExperienceData) => {
-        setCvData((prevData) => ({
-            ...prevData,
-            [SECTIONS.WORK_EXPERIENCE]: workExperienceData,
-        }));
-    }, []);
+    const handleWorkExperienceUpdate = useCallback(
+        (workExperienceData) => {
+            setCvData((prevData) => {
+                const newData = {
+                    ...prevData,
+                    [SECTIONS.WORK_EXPERIENCE]: workExperienceData,
+                };
+                if (onDataChange) {
+                    onDataChange(newData);
+                }
+                return newData;
+            });
+        },
+        [onDataChange]
+    );
 
     /**
-     * Manual save function
-     */
-    const handleManualSave = useCallback(async () => {
-        const success = await saveToStorage();
-        return success;
-    }, [saveToStorage]);
-
-    /**
-     * Clear all data
+     * Handle clear all data
      */
     const handleClearData = useCallback(() => {
         if (
@@ -184,17 +85,17 @@ const CVBuilder = ({
                 "Are you sure you want to clear all CV data? This action cannot be undone."
             )
         ) {
-            setCvData(deepClone(DEFAULT_CV_DATA));
-            localStorage.removeItem(STORAGE_KEY);
-            setLastSaved(null);
-            setSaveError(null);
+            setCvData(DEFAULT_CV_DATA);
+            if (onDataChange) {
+                onDataChange(DEFAULT_CV_DATA);
+            }
         }
-    }, []);
+    }, [onDataChange]);
 
     /**
-     * Export CV data
+     * Handle export to JSON
      */
-    const handleExportData = useCallback(() => {
+    const handleExportJSON = useCallback(() => {
         try {
             const dataString = JSON.stringify(cvData, null, 2);
             const blob = new Blob([dataString], { type: "application/json" });
@@ -202,68 +103,86 @@ const CVBuilder = ({
 
             const link = document.createElement("a");
             link.href = url;
-            link.download = "cv-data.json";
+            link.download = `cv-data-${
+                new Date().toISOString().split("T")[0]
+            }.json`;
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
 
             URL.revokeObjectURL(url);
         } catch (error) {
-            console.error("Error exporting CV data:", error);
-            setSaveError("Failed to export CV data.");
+            console.error("Export failed:", error);
+            alert("Failed to export CV data");
         }
     }, [cvData]);
 
     /**
-     * Import CV data
+     * Handle export to PDF
      */
-    const handleImportData = useCallback(
-        (event) => {
-            const file = event.target.files[0];
-            if (!file) return;
+    const handleExportPDF = useCallback(async () => {
+        console.log("PDF export button clicked");
 
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                try {
-                    const importedData = JSON.parse(e.target.result);
+        if (!previewRef.current) {
+            alert("Preview not available for export");
+            return;
+        }
 
-                    // Validate and merge with defaults
-                    const validatedData = {
-                        ...DEFAULT_CV_DATA,
-                        ...importedData,
-                        [SECTIONS.EDUCATION]: Array.isArray(
-                            importedData[SECTIONS.EDUCATION]
-                        )
-                            ? importedData[SECTIONS.EDUCATION]
-                            : [],
-                        [SECTIONS.WORK_EXPERIENCE]: Array.isArray(
-                            importedData[SECTIONS.WORK_EXPERIENCE]
-                        )
-                            ? importedData[SECTIONS.WORK_EXPERIENCE]
-                            : [],
-                        [SECTIONS.PERSONAL_INFO]: {
-                            ...DEFAULT_CV_DATA[SECTIONS.PERSONAL_INFO],
-                            ...(importedData[SECTIONS.PERSONAL_INFO] || {}),
-                        },
-                    };
+        try {
+            // Find the CV document element within the preview
+            const cvDocument = previewRef.current.querySelector(
+                ".cv-document-export"
+            );
 
-                    setCvData(validatedData);
-                    saveToStorage(validatedData);
-                    setSaveError(null);
-                } catch (error) {
-                    console.error("Error importing CV data:", error);
-                    setSaveError(
-                        "Failed to import CV data. Please check the file format."
-                    );
-                }
-            };
+            console.log("CV document element found:", !!cvDocument);
 
-            reader.readAsText(file);
-            // Reset the input
-            event.target.value = "";
-        },
-        [saveToStorage]
-    );
+            if (!cvDocument) {
+                alert(
+                    "CV content not found for export. Please make sure you have filled out some CV information."
+                );
+                return;
+            }
+
+            console.log("Starting PDF export...");
+            const result = await exportToPDF(cvData, cvDocument);
+
+            if (result.success) {
+                console.log(`PDF exported successfully: ${result.filename}`);
+                // Show success message to user
+                alert(
+                    `PDF exported successfully! Check your Downloads folder for: ${result.filename}`
+                );
+            }
+        } catch (error) {
+            console.error("PDF export error:", error);
+            alert(`Failed to export PDF: ${error.message}`);
+        }
+    }, [cvData]);
+
+    /**
+     * Handle export to Word
+     */
+    const handleExportWord = useCallback(async () => {
+        console.log("Word export button clicked");
+
+        try {
+            console.log("Starting Word export...");
+            const result = await exportToWord(cvData);
+
+            if (result.success) {
+                console.log(
+                    `Word document exported successfully: ${result.filename}`
+                );
+                // Show success message to user
+                alert(
+                    `Word document exported successfully! Check your Downloads folder for: ${result.filename}`
+                );
+            }
+        } catch (error) {
+            console.error("Word export error:", error);
+            alert(`Failed to export Word document: ${error.message}`);
+        }
+    }, [cvData]);
 
     /**
      * Check if CV has any data
@@ -278,39 +197,6 @@ const CVBuilder = ({
         return hasPersonalInfo || hasEducation || hasWorkExperience;
     }, [cvData]);
 
-    /**
-     * Format last saved time
-     */
-    const formatLastSaved = useCallback((date) => {
-        if (!date) return "Never";
-
-        const now = new Date();
-        const diffMs = now - date;
-        const diffMins = Math.floor(diffMs / 60000);
-
-        if (diffMins < 1) return "Just now";
-        if (diffMins < 60)
-            return `${diffMins} minute${diffMins > 1 ? "s" : ""} ago`;
-
-        const diffHours = Math.floor(diffMins / 60);
-        if (diffHours < 24)
-            return `${diffHours} hour${diffHours > 1 ? "s" : ""} ago`;
-
-        return date.toLocaleDateString();
-    }, []);
-
-    // Show loading state
-    if (isLoading) {
-        return (
-            <div className={`${styles.cvBuilder} ${className}`}>
-                <div className={styles.loadingState}>
-                    <div className={styles.loadingSpinner} />
-                    <p>Loading your CV...</p>
-                </div>
-            </div>
-        );
-    }
-
     return (
         <div className={`${styles.cvBuilder} ${className}`}>
             {/* Header with controls */}
@@ -318,102 +204,81 @@ const CVBuilder = ({
                 <div className={styles.headerContent}>
                     <h1 className={styles.title}>CV Builder</h1>
 
-                    <div className={styles.headerInfo}>
-                        <div className={styles.saveStatus}>
-                            <span className={styles.saveStatusLabel}>
-                                Last saved:
-                            </span>
-                            <span className={styles.saveStatusTime}>
-                                {formatLastSaved(lastSaved)}
-                            </span>
-                        </div>
-
-                        <div className={styles.headerActions}>
-                            <button
-                                type="button"
-                                onClick={handleManualSave}
-                                className={styles.saveButton}
-                                title="Save now"
-                            >
-                                💾 Save
-                            </button>
-
-                            <button
-                                type="button"
-                                onClick={handleExportData}
-                                disabled={!hasData}
-                                className={styles.exportButton}
-                                title="Export CV data"
-                            >
-                                📤 Export
-                            </button>
-
-                            <label
-                                className={styles.importButton}
-                                title="Import CV data"
-                            >
-                                📥 Import
-                                <input
-                                    type="file"
-                                    accept=".json"
-                                    onChange={handleImportData}
-                                    className={styles.importInput}
-                                />
-                            </label>
-
-                            <button
-                                type="button"
-                                onClick={handleClearData}
-                                disabled={!hasData}
-                                className={styles.clearButton}
-                                title="Clear all data"
-                            >
-                                🗑️ Clear
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                {/* Error message */}
-                {saveError && (
-                    <div className={styles.errorMessage} role="alert">
-                        <span className={styles.errorIcon}>⚠️</span>
-                        {saveError}
+                    <div className={styles.headerActions}>
                         <button
                             type="button"
-                            onClick={() => setSaveError(null)}
-                            className={styles.errorDismiss}
-                            aria-label="Dismiss error"
+                            onClick={handleExportJSON}
+                            disabled={!hasData}
+                            className={styles.exportButton}
+                            title="Export CV data as JSON"
                         >
-                            ✕
+                            📄 Export JSON
+                        </button>
+
+                        <button
+                            type="button"
+                            onClick={handleExportPDF}
+                            disabled={!hasData}
+                            className={styles.exportButton}
+                            title="Export CV as PDF"
+                        >
+                            📄 Export PDF
+                        </button>
+
+                        <button
+                            type="button"
+                            onClick={handleExportWord}
+                            disabled={!hasData}
+                            className={styles.exportButton}
+                            title="Export CV as Word document"
+                        >
+                            📄 Export Word
+                        </button>
+
+                        <button
+                            type="button"
+                            onClick={handleClearData}
+                            disabled={!hasData}
+                            className={styles.clearButton}
+                            title="Clear all data"
+                        >
+                            🗑️ Clear
                         </button>
                     </div>
-                )}
+                </div>
             </div>
 
             {/* Main content */}
             <div className={styles.content}>
-                <div className={styles.sectionsContainer}>
-                    {/* Personal Information Section */}
-                    <PersonalInfo
-                        data={cvData[SECTIONS.PERSONAL_INFO]}
-                        onUpdate={handlePersonalInfoUpdate}
-                        className={styles.section}
-                    />
+                {/* Left side - Form inputs */}
+                <div className={styles.formPanel}>
+                    <div className={styles.sectionsContainer}>
+                        {/* Personal Information Section */}
+                        <PersonalInfo
+                            data={cvData[SECTIONS.PERSONAL_INFO]}
+                            onUpdate={handlePersonalInfoUpdate}
+                            className={styles.section}
+                        />
 
-                    {/* Education Section */}
-                    <Education
-                        data={cvData[SECTIONS.EDUCATION]}
-                        onUpdate={handleEducationUpdate}
-                        className={styles.section}
-                    />
+                        {/* Education Section */}
+                        <Education
+                            data={cvData[SECTIONS.EDUCATION]}
+                            onUpdate={handleEducationUpdate}
+                            className={styles.section}
+                        />
 
-                    {/* Work Experience Section */}
-                    <WorkExperience
-                        data={cvData[SECTIONS.WORK_EXPERIENCE]}
-                        onUpdate={handleWorkExperienceUpdate}
-                        className={styles.section}
-                    />
+                        {/* Work Experience Section */}
+                        <WorkExperience
+                            data={cvData[SECTIONS.WORK_EXPERIENCE]}
+                            onUpdate={handleWorkExperienceUpdate}
+                            className={styles.section}
+                        />
+                    </div>
+                </div>
+
+                {/* Right side - Live preview */}
+                <div className={styles.previewPanel} ref={previewRef}>
+                    <CVPreview cvData={cvData} />
                 </div>
             </div>
 
@@ -422,18 +287,30 @@ const CVBuilder = ({
                 <div className={styles.footerContent}>
                     <p className={styles.footerText}>
                         {hasData
-                            ? `Your CV contains ${
-                                  Object.values(cvData).flat().length
-                              } items`
+                            ? `Your CV contains data in ${[
+                                  cvData[SECTIONS.PERSONAL_INFO].name ? 1 : 0,
+                                  cvData[SECTIONS.EDUCATION].length > 0 ? 1 : 0,
+                                  cvData[SECTIONS.WORK_EXPERIENCE].length > 0
+                                      ? 1
+                                      : 0,
+                              ].reduce((a, b) => a + b, 0)} section${
+                                  [
+                                      cvData[SECTIONS.PERSONAL_INFO].name
+                                          ? 1
+                                          : 0,
+                                      cvData[SECTIONS.EDUCATION].length > 0
+                                          ? 1
+                                          : 0,
+                                      cvData[SECTIONS.WORK_EXPERIENCE].length >
+                                      0
+                                          ? 1
+                                          : 0,
+                                  ].reduce((a, b) => a + b, 0) !== 1
+                                      ? "s"
+                                      : ""
+                              }`
                             : "Start building your CV by adding your personal information"}
                     </p>
-
-                    {autoSave && (
-                        <p className={styles.autoSaveInfo}>
-                            <span className={styles.autoSaveIcon}>🔄</span>
-                            Auto-save enabled
-                        </p>
-                    )}
                 </div>
             </div>
         </div>
@@ -445,10 +322,6 @@ CVBuilder.propTypes = {
     className: PropTypes.string,
     /** Callback function called when CV data changes */
     onDataChange: PropTypes.func,
-    /** Whether to enable auto-save functionality */
-    autoSave: PropTypes.bool,
-    /** Delay in milliseconds for auto-save */
-    autoSaveDelay: PropTypes.number,
 };
 
 export default CVBuilder;

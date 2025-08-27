@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Download Test</title>
+    </head>
+    <body>
+        <h1>Download Test</h1>
+        <button onclick="testDownload()">Test Download</button>
+
+        <script>
+            function testDownload() {
+                console.log("Testing download...");
+
+                // Create a simple text file
+                const content = "This is a test file to verify downloads work.";
+                const blob = new Blob([content], { type: "text/plain" });
+                const url = URL.createObjectURL(blob);
+
+                // Create download link
+                const link = document.createElement("a");
+                link.href = url;
+                link.download = "test-download.txt";
+                link.style.display = "none";
+
+                // Add to DOM and click
+                document.body.appendChild(link);
+                link.click();
+
+                // Clean up
+                setTimeout(() => {
+                    document.body.removeChild(link);
+                    URL.revokeObjectURL(url);
+                    console.log("Download test completed");
+                }, 100);
+            }
+        </script>
+    </body>
+</html>

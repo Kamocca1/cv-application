@@ -39,12 +39,20 @@ const EditableSection = ({
             const rule = validationRules[fieldName];
             if (!rule) return null;
 
-            if (typeof rule === "function") {
-                return rule(value);
-            }
+            try {
+                if (typeof rule === "function") {
+                    return rule(value);
+                }
 
-            if (typeof rule === "object" && rule.validator) {
-                return rule.validator(value);
+                if (typeof rule === "object" && rule.validator) {
+                    return rule.validator(value);
+                }
+            } catch (error) {
+                console.error(
+                    `Validation error for field ${fieldName}:`,
+                    error
+                );
+                return "Validation error occurred";
             }
 
             return null;
@@ -53,22 +61,6 @@ const EditableSection = ({
     );
 
     // Validate all fields
-    const validateAllFields = useCallback(() => {
-        const errors = {};
-        let hasErrors = false;
-
-        Object.keys(validationRules).forEach((fieldName) => {
-            const value = localData[fieldName];
-            const error = validateField(fieldName, value);
-            if (error) {
-                errors[fieldName] = error;
-                hasErrors = true;
-            }
-        });
-
-        setValidationErrors(errors);
-        return !hasErrors;
-    }, [localData, validationRules, validateField]);
 
     // Handle save (defined early to avoid hoisting issues)
     const handleSave = useCallback(
@@ -78,8 +70,31 @@ const EditableSection = ({
             }
 
             try {
-                const isValid = validateAllFields();
-                if (!isValid) {
+                // Validate directly instead of using validateAllFields to avoid circular dependency
+                const errors = {};
+                let hasErrors = false;
+
+                Object.keys(validationRules).forEach((fieldName) => {
+                    const rule = validationRules[fieldName];
+                    if (!rule) return;
+
+                    const value = dataToSave[fieldName];
+                    let error = null;
+
+                    if (typeof rule === "function") {
+                        error = rule(value);
+                    } else if (typeof rule === "object" && rule.validator) {
+                        error = rule.validator(value);
+                    }
+
+                    if (error) {
+                        errors[fieldName] = error;
+                        hasErrors = true;
+                    }
+                });
+
+                if (hasErrors) {
+                    setValidationErrors(errors);
                     if (!silent) {
                         setIsLoading(false);
                     }
@@ -106,7 +121,7 @@ const EditableSection = ({
                 }
             }
         },
-        [localData, validateAllFields, onSave]
+        [localData, validationRules, onSave]
     );
 
     // Handle field changes
@@ -134,9 +149,33 @@ const EditableSection = ({
                 }
 
                 const timeout = setTimeout(() => {
-                    const isValid = validateAllFields();
-                    if (isValid) {
-                        handleSave(newData, true); // Silent auto-save
+                    // Validate the new data directly instead of relying on state
+                    const errors = {};
+                    let hasErrors = false;
+
+                    Object.keys(validationRules).forEach((field) => {
+                        const rule = validationRules[field];
+                        if (!rule) return;
+
+                        const fieldValue = newData[field];
+                        let error = null;
+
+                        if (typeof rule === "function") {
+                            error = rule(fieldValue);
+                        } else if (typeof rule === "object" && rule.validator) {
+                            error = rule.validator(fieldValue);
+                        }
+
+                        if (error) {
+                            errors[field] = error;
+                            hasErrors = true;
+                        }
+                    });
+
+                    if (!hasErrors && onSave) {
+                        onSave(newData).catch((error) => {
+                            console.error("Auto-save failed:", error);
+                        });
                     }
                 }, autoSaveDelay);
 
@@ -150,8 +189,8 @@ const EditableSection = ({
             isEditing,
             autoSaveTimeout,
             autoSaveDelay,
-            validateAllFields,
-            handleSave,
+            validationRules,
+            onSave,
         ]
     );
 

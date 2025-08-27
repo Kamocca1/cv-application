@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>CV Export Demo</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                max-width: 800px;
+                margin: 0 auto;
+                padding: 20px;
+                line-height: 1.6;
+            }
+            .demo-section {
+                margin-bottom: 30px;
+                padding: 20px;
+                border: 1px solid #ddd;
+                border-radius: 8px;
+            }
+            .feature-list {
+                list-style-type: none;
+                padding: 0;
+            }
+            .feature-list li {
+                padding: 8px 0;
+                border-bottom: 1px solid #eee;
+            }
+            .feature-list li:before {
+                content: "✅ ";
+                margin-right: 8px;
+            }
+            .code-block {
+                background-color: #f5f5f5;
+                padding: 15px;
+                border-radius: 4px;
+                font-family: "Courier New", monospace;
+                overflow-x: auto;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>CV Export Functionality Demo</h1>
+
+        <div class="demo-section">
+            <h2>🎯 Implementation Complete</h2>
+            <p>
+                The CV application now has fully functional PDF and Word export
+                capabilities!
+            </p>
+
+            <h3>Features Implemented:</h3>
+            <ul class="feature-list">
+                <li>PDF Export using html2canvas and jsPDF</li>
+                <li>Word Document Export using docx library</li>
+                <li>Automatic filename generation with user's name and date</li>
+                <li>Error handling and user feedback</li>
+                <li>Professional formatting for both export types</li>
+                <li>Responsive design considerations</li>
+            </ul>
+        </div>
+
+        <div class="demo-section">
+            <h2>📦 Dependencies Added</h2>
+            <div class="code-block">
+                npm install jspdf html2canvas docx file-saver
+            </div>
+            <p>
+                These libraries provide the core functionality for generating
+                PDF and Word documents.
+            </p>
+        </div>
+
+        <div class="demo-section">
+            <h2>🔧 How It Works</h2>
+
+            <h3>PDF Export Process:</h3>
+            <ol>
+                <li>Creates a temporary DOM container with A4 dimensions</li>
+                <li>Clones the CV preview content with optimized styling</li>
+                <li>Uses html2canvas to capture the content as an image</li>
+                <li>Embeds the image in a PDF using jsPDF</li>
+                <li>Downloads the file with a generated filename</li>
+            </ol>
+
+            <h3>Word Export Process:</h3>
+            <ol>
+                <li>Extracts CV data from the application state</li>
+                <li>Creates structured document sections using docx library</li>
+                <li>
+                    Formats text with appropriate headings, fonts, and spacing
+                </li>
+                <li>Generates a .docx file and triggers download</li>
+            </ol>
+        </div>
+
+        <div class="demo-section">
+            <h2>🚀 Usage</h2>
+            <p>To test the export functionality:</p>
+            <ol>
+                <li>Run the development server: <code>npm run dev</code></li>
+                <li>Fill out the CV form with your information</li>
+                <li>Click either "📄 Export PDF" or "📄 Export Word" button</li>
+                <li>
+                    The file will be automatically downloaded to your default
+                    download folder
+                </li>
+            </ol>
+        </div>
+
+        <div class="demo-section">
+            <h2>📁 Files Modified/Created</h2>
+            <ul>
+                <li>
+                    <strong>src/utils/exportUtils.js</strong> - New utility
+                    functions for PDF and Word export
+                </li>
+                <li>
+                    <strong>src/components/CVBuilder.jsx</strong> - Updated with
+                    export functionality
+                </li>
+                <li>
+                    <strong>src/components/CVPreview.jsx</strong> - Added
+                    export-friendly CSS class
+                </li>
+                <li>
+                    <strong>src/utils/__tests__/exportUtils.test.js</strong> -
+                    Tests for export functions
+                </li>
+                <li>
+                    <strong>package.json</strong> - Added export dependencies
+                </li>
+            </ul>
+        </div>
+
+        <div class="demo-section">
+            <h2>✨ Export Features</h2>
+            <ul class="feature-list">
+                <li>Smart filename generation using user's name</li>
+                <li>Date-stamped filenames for version control</li>
+                <li>Professional formatting with proper fonts and spacing</li>
+                <li>Error handling with user-friendly messages</li>
+                <li>Disabled buttons when no CV data is present</li>
+                <li>Optimized PDF rendering with A4 page dimensions</li>
+                <li>Structured Word documents with proper headings</li>
+            </ul>
+        </div>
+    </body>
+</html>
