@@ -1,12 +1,19 @@
 import React from "react";
-import FormDemo from "./components/FormDemo.jsx";
+import CVBuilder from "./components/CVBuilder.jsx";
 import "./App.css";
 
 function App() {
+    const handleDataChange = (data) => {
+        console.log("CV data updated:", data);
+    };
+
     return (
-        <div>
-            <h1>CV Builder - Form Components Demo</h1>
-            <FormDemo />
+        <div className="app">
+            <CVBuilder
+                onDataChange={handleDataChange}
+                autoSave={true}
+                autoSaveDelay={2000}
+            />
         </div>
     );
 }

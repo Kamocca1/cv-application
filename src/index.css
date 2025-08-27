@@ -1,3 +1,7 @@
+/* Import additional CSS files */
+@import "./styles/breakpoints.css";
+@import "./styles/utilities.css";
+
 :root {
     /* Typography */
     --font-family-primary: system-ui, Avenir, Helvetica, Arial, sans-serif;
@@ -222,6 +226,3 @@ legend {
         scroll-behavior: auto !important;
     }
 }
-/* Import additional CSS files */
-@import "./styles/breakpoints.css";
-@import "./styles/utilities.css";

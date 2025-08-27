@@ -52,7 +52,7 @@
     -   Write unit tests for PersonalInfo component
     -   _Requirements: 1.1, 1.2, 1.3, 1.4, 1.5_
 
--   [ ] 7. Implement Education component
+-   [x] 7. Implement Education component
 
     -   Create Education component using EditableSection HOC
     -   Add form fields for school name, title of study, and dates
@@ -62,7 +62,7 @@
     -   Write unit tests for Education component
     -   _Requirements: 2.1, 2.2, 2.3, 2.4, 2.5_
 
--   [ ] 8. Implement WorkExperience component
+-   [x] 8. Implement WorkExperience component
 
     -   Create WorkExperience component using EditableSection HOC
     -   Add form fields for company, position, responsibilities, and dates
@@ -72,7 +72,7 @@
     -   Write unit tests for WorkExperience component
     -   _Requirements: 3.1, 3.2, 3.3, 3.4, 3.5_
 
--   [ ] 9. Create main CVBuilder container component
+-   [x] 9. Create main CVBuilder container component
 
     -   Build CVBuilder component that manages overall CV state
     -   Integrate PersonalInfo, Education, and WorkExperience components
