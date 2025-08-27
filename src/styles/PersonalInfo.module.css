@@ -89,6 +89,12 @@
     color: var(--color-text-tertiary);
 }
 
+.emptyStateIcon {
+    font-size: var(--font-size-4xl);
+    margin-bottom: var(--spacing-lg);
+    opacity: 0.5;
+}
+
 .emptyStateText {
     font-size: var(--font-size-lg);
     margin-bottom: var(--spacing-sm);
@@ -100,17 +106,115 @@
 }
 
 /* Responsive Design */
-@media (min-width: 768px) {
+
+/* Mobile devices (320px - 767px) */
+@media (max-width: 767px) {
+    .personalInfo {
+        padding: var(--spacing-lg);
+    }
+
+    .displayView {
+        gap: var(--spacing-lg);
+    }
+
     .infoGrid {
-        grid-template-columns: 2fr 1fr;
-        align-items: start;
+        grid-template-columns: 1fr;
+        gap: var(--spacing-lg);
+        text-align: center;
+    }
+
+    .name {
+        font-size: var(--font-size-2xl);
+        margin-bottom: var(--spacing-lg);
+        word-break: break-word;
+        hyphens: auto;
+    }
+
+    .contactInfo {
+        flex-direction: column;
+        gap: var(--spacing-md);
+        align-items: center;
+    }
+
+    .contactItem {
+        justify-content: center;
+        font-size: var(--font-size-base);
+        padding: var(--spacing-sm);
+        background-color: var(--color-bg-tertiary);
+        border-radius: var(--border-radius-md);
+        width: 100%;
+        max-width: 300px;
+    }
+
+    .contactIcon {
+        width: 20px;
+        height: 20px;
+    }
+
+    .editForm {
+        gap: var(--spacing-lg);
+    }
+
+    .formGrid {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-lg);
+    }
+
+    .formActions {
+        flex-direction: column;
+        gap: var(--spacing-sm);
+        margin-top: var(--spacing-xl);
+    }
+
+    .emptyState {
+        padding: var(--spacing-2xl);
+    }
+
+    .emptyStateText {
+        font-size: var(--font-size-base);
+    }
+
+    .emptyStateSubtext {
+        font-size: var(--font-size-sm);
+    }
+}
+
+/* Small mobile devices (320px - 479px) */
+@media (max-width: 479px) {
+    .personalInfo {
+        padding: var(--spacing-md);
+    }
+
+    .name {
+        font-size: var(--font-size-xl);
+    }
+
+    .contactItem {
+        font-size: var(--font-size-sm);
+        padding: var(--spacing-xs);
+    }
+
+    .contactIcon {
+        width: 16px;
+        height: 16px;
+    }
+}
+
+/* Tablet devices (768px - 1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
+    .infoGrid {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-xl);
+        text-align: center;
     }
 
     .formGrid {
         grid-template-columns: 1fr 1fr;
+        gap: var(--spacing-xl);
     }
 
     .name {
+        font-size: var(--font-size-3xl);
         grid-column: 1 / -1;
     }
 
@@ -118,30 +222,69 @@
         flex-direction: row;
         flex-wrap: wrap;
         gap: var(--spacing-lg);
+        justify-content: center;
     }
 
     .contactItem {
         flex: 1;
         min-width: 200px;
+        max-width: 250px;
     }
 }
 
+/* Desktop devices (1024px and up) */
 @media (min-width: 1024px) {
     .infoGrid {
-        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-columns: 2fr 1fr;
         gap: var(--spacing-2xl);
+        align-items: start;
+        text-align: left;
     }
 
     .formGrid {
         grid-template-columns: 1fr 1fr 1fr;
+        gap: var(--spacing-xl);
     }
 
     .name {
         font-size: var(--font-size-3xl);
+        grid-column: 1 / -1;
+        text-align: left;
     }
 
     .contactInfo {
-        justify-content: space-between;
+        flex-direction: column;
+        gap: var(--spacing-md);
+        justify-content: flex-start;
+    }
+
+    .contactItem {
+        justify-content: flex-start;
+        background-color: transparent;
+        padding: 0;
+        width: auto;
+        max-width: none;
+    }
+
+    .contactItem:hover {
+        color: var(--color-primary);
+        transition: color var(--transition-fast);
+    }
+}
+
+/* Large desktop (1440px and up) */
+@media (min-width: 1440px) {
+    .infoGrid {
+        grid-template-columns: 3fr 2fr;
+        gap: var(--spacing-3xl);
+    }
+
+    .name {
+        font-size: var(--font-size-4xl);
+    }
+
+    .contactInfo {
+        gap: var(--spacing-lg);
     }
 }
 

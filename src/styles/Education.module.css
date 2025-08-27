@@ -174,9 +174,153 @@
 }
 
 /* Responsive Design */
-@media (min-width: 768px) {
+
+/* Mobile devices (320px - 767px) */
+@media (max-width: 767px) {
+    .education {
+        padding: var(--spacing-lg);
+    }
+
+    .displayView {
+        gap: var(--spacing-lg);
+    }
+
+    .educationList {
+        gap: var(--spacing-md);
+    }
+
+    .educationItem {
+        padding: var(--spacing-lg);
+        border-radius: var(--border-radius-lg);
+        border-width: 2px;
+    }
+
+    .educationHeader {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--spacing-sm);
+        margin-bottom: var(--spacing-md);
+    }
+
+    .schoolName {
+        font-size: var(--font-size-lg);
+        word-break: break-word;
+        hyphens: auto;
+    }
+
+    .dateRange {
+        font-size: var(--font-size-sm);
+        background-color: var(--color-bg-tertiary);
+        padding: var(--spacing-xs) var(--spacing-sm);
+        border-radius: var(--border-radius-sm);
+        align-self: flex-start;
+    }
+
+    .titleOfStudy {
+        font-size: var(--font-size-base);
+        margin-top: var(--spacing-xs);
+    }
+
+    .editForm {
+        gap: var(--spacing-lg);
+    }
+
+    .educationEntries {
+        gap: var(--spacing-md);
+    }
+
+    .educationEntry {
+        padding: var(--spacing-lg);
+        border-radius: var(--border-radius-lg);
+    }
+
+    .entryHeader {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--spacing-sm);
+        margin-bottom: var(--spacing-md);
+    }
+
+    .entryTitle {
+        font-size: var(--font-size-base);
+    }
+
+    .removeButton {
+        align-self: flex-end;
+        padding: var(--spacing-sm) var(--spacing-md);
+        font-size: var(--font-size-sm);
+        min-height: 36px;
+    }
+
+    .entryFields {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-md);
+    }
+
+    .dateFields {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-sm);
+    }
+
+    .addButton {
+        padding: var(--spacing-lg);
+        min-height: 44px; /* Touch-friendly */
+        border-radius: var(--border-radius-lg);
+        font-size: var(--font-size-base);
+    }
+
+    .formActions {
+        flex-direction: column;
+        gap: var(--spacing-sm);
+        margin-top: var(--spacing-lg);
+    }
+
+    .emptyState {
+        padding: var(--spacing-2xl);
+    }
+
+    .emptyStateText {
+        font-size: var(--font-size-base);
+    }
+
+    .emptyStateSubtext {
+        font-size: var(--font-size-sm);
+    }
+}
+
+/* Small mobile devices (320px - 479px) */
+@media (max-width: 479px) {
+    .education {
+        padding: var(--spacing-md);
+    }
+
+    .educationItem,
+    .educationEntry {
+        padding: var(--spacing-md);
+    }
+
+    .schoolName {
+        font-size: var(--font-size-base);
+    }
+
+    .removeButton {
+        padding: var(--spacing-xs) var(--spacing-sm);
+        font-size: var(--font-size-xs);
+        min-height: 32px;
+    }
+
+    .addButton {
+        padding: var(--spacing-md);
+        font-size: var(--font-size-sm);
+        min-height: 40px;
+    }
+}
+
+/* Tablet devices (768px - 1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
     .educationHeader {
         align-items: center;
+        flex-direction: row;
     }
 
     .entryFields {
@@ -186,9 +330,16 @@
 
     .dateFields {
         grid-column: 2;
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .entryHeader {
+        flex-direction: row;
+        align-items: center;
     }
 }
 
+/* Desktop devices (1024px and up) */
 @media (min-width: 1024px) {
     .educationList {
         gap: var(--spacing-xl);
@@ -196,6 +347,12 @@
 
     .educationItem {
         padding: var(--spacing-xl);
+        transition: all var(--transition-fast);
+    }
+
+    .educationItem:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-md);
     }
 
     .entryFields {
@@ -206,6 +363,11 @@
         grid-column: 3;
         grid-template-columns: 1fr;
         gap: var(--spacing-sm);
+    }
+
+    .addButton:hover {
+        transform: translateY(-1px);
+        box-shadow: var(--shadow-sm);
     }
 }
 

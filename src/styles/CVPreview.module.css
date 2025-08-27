@@ -1,4 +1,4 @@
-/* CV Preview Styles - Print-ready formatting */
+/* CV Preview Styles - Print-ready formatting with responsive design */
 
 .cvPreview {
     background-color: #ffffff;
@@ -13,6 +13,8 @@
     margin: 2rem auto;
     border: 1px solid #e5e7eb;
     padding: 2rem;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .cvTitle {
@@ -98,11 +100,129 @@
     }
 }
 
+/* Responsive Design for CV Preview */
+
+/* Mobile devices (320px - 767px) */
+@media (max-width: 767px) {
+    .cvPreview {
+        margin: 1rem;
+        padding: 1rem;
+        border-radius: var(--border-radius-lg);
+        max-width: none;
+        min-height: auto;
+        font-size: 14px;
+        line-height: 1.5;
+    }
+
+    .cvTitle {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+        text-align: center;
+        word-break: break-word;
+        hyphens: auto;
+    }
+
+    .sectionTitle {
+        font-size: 1.2rem;
+        margin-bottom: 0.75rem;
+        border-bottom-width: 2px;
+    }
+
+    .section {
+        margin-bottom: 1.5rem;
+        page-break-inside: auto;
+    }
+
+    .fieldLabel {
+        font-size: 0.9rem;
+        display: block;
+        margin-bottom: 0.25rem;
+    }
+
+    .fieldValue {
+        font-size: 0.9rem;
+        word-break: break-word;
+        hyphens: auto;
+    }
+
+    .responsibilitiesText {
+        font-size: 0.85rem;
+        padding-left: 0.5rem;
+        margin-top: 0.5rem;
+    }
+
+    .emptyState {
+        margin-top: 2rem;
+        font-size: 0.9rem;
+    }
+}
+
+/* Small mobile devices (320px - 479px) */
+@media (max-width: 479px) {
+    .cvPreview {
+        margin: 0.5rem;
+        padding: 0.75rem;
+        font-size: 13px;
+    }
+
+    .cvTitle {
+        font-size: 1.3rem;
+    }
+
+    .sectionTitle {
+        font-size: 1.1rem;
+    }
+
+    .fieldLabel,
+    .fieldValue {
+        font-size: 0.85rem;
+    }
+
+    .responsibilitiesText {
+        font-size: 0.8rem;
+    }
+}
+
+/* Tablet devices (768px - 1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
+    .cvPreview {
+        margin: 1.5rem auto;
+        padding: 1.5rem;
+        max-width: 7in;
+        font-size: 15px;
+    }
+
+    .cvTitle {
+        font-size: 1.8rem;
+    }
+
+    .sectionTitle {
+        font-size: 1.4rem;
+    }
+}
+
+/* Desktop devices (1024px and up) */
+@media (min-width: 1024px) {
+    .cvPreview {
+        margin: 2rem auto;
+        padding: 2rem;
+        max-width: 8.5in;
+        font-size: 16px;
+        transition: box-shadow var(--transition-fast);
+    }
+
+    .cvPreview:hover {
+        box-shadow: 0 8px 25px -5px rgba(0, 0, 0, 0.1),
+            0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    }
+}
+
 /* Dark mode adjustments for the preview (keep it print-like) */
 @media (prefers-color-scheme: dark) {
     .cvPreview {
         /* Keep white background for print preview even in dark mode */
         background-color: #ffffff;
         color: #000000;
+        border-color: #d1d5db;
     }
 }

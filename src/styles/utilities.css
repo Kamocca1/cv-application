@@ -945,6 +945,74 @@
 }
 
 /* Responsive Utilities */
+
+/* Mobile-first utilities */
+@media (max-width: 767px) {
+    .mobile\:block {
+        display: block;
+    }
+    .mobile\:hidden {
+        display: none;
+    }
+    .mobile\:flex {
+        display: flex;
+    }
+    .mobile\:flex-col {
+        flex-direction: column;
+    }
+    .mobile\:grid {
+        display: grid;
+    }
+    .mobile\:grid-cols-1 {
+        grid-template-columns: 1fr;
+    }
+    .mobile\:text-center {
+        text-align: center;
+    }
+    .mobile\:text-sm {
+        font-size: var(--font-size-sm);
+    }
+    .mobile\:text-base {
+        font-size: var(--font-size-base);
+    }
+    .mobile\:text-lg {
+        font-size: var(--font-size-lg);
+    }
+    .mobile\:p-sm {
+        padding: var(--spacing-sm);
+    }
+    .mobile\:p-md {
+        padding: var(--spacing-md);
+    }
+    .mobile\:p-lg {
+        padding: var(--spacing-lg);
+    }
+    .mobile\:m-sm {
+        margin: var(--spacing-sm);
+    }
+    .mobile\:m-md {
+        margin: var(--spacing-md);
+    }
+    .mobile\:m-lg {
+        margin: var(--spacing-lg);
+    }
+    .mobile\:gap-sm {
+        gap: var(--spacing-sm);
+    }
+    .mobile\:gap-md {
+        gap: var(--spacing-md);
+    }
+    .mobile\:gap-lg {
+        gap: var(--spacing-lg);
+    }
+    .mobile\:w-full {
+        width: 100%;
+    }
+    .mobile\:min-h-44 {
+        min-height: 44px; /* Touch-friendly minimum */
+    }
+}
+
 @media (min-width: 768px) {
     .tablet\:block {
         display: block;
@@ -972,6 +1040,12 @@
     }
     .tablet\:text-2xl {
         font-size: var(--font-size-2xl);
+    }
+    .tablet\:p-xl {
+        padding: var(--spacing-xl);
+    }
+    .tablet\:gap-xl {
+        gap: var(--spacing-xl);
     }
 }
 
@@ -1005,6 +1079,18 @@
     }
     .desktop\:text-3xl {
         font-size: var(--font-size-3xl);
+    }
+    .desktop\:p-2xl {
+        padding: var(--spacing-2xl);
+    }
+    .desktop\:gap-2xl {
+        gap: var(--spacing-2xl);
+    }
+    .desktop\:hover\:shadow-lg:hover {
+        box-shadow: var(--shadow-lg);
+    }
+    .desktop\:hover\:transform:hover {
+        transform: translateY(-2px);
     }
 }
 

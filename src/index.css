@@ -1,6 +1,7 @@
 /* Import additional CSS files */
 @import "./styles/breakpoints.css";
 @import "./styles/utilities.css";
+@import "./styles/mobile-optimizations.css";
 
 :root {
     /* Typography */

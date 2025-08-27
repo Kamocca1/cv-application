@@ -1,0 +1,292 @@
+/* Mobile Optimizations and Cross-Browser Compatibility */
+
+/* iOS Safari specific fixes */
+@supports (-webkit-touch-callout: none) {
+    /* Fix for iOS Safari viewport units */
+    .ios-vh-fix {
+        height: -webkit-fill-available;
+        min-height: -webkit-fill-available;
+    }
+
+    /* Fix for iOS Safari input zoom */
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    input[type="date"],
+    textarea,
+    select {
+        font-size: 16px; /* Prevents zoom on iOS */
+    }
+
+    /* Fix for iOS Safari button styling */
+    button,
+    input[type="button"],
+    input[type="submit"] {
+        -webkit-appearance: none;
+        border-radius: 0;
+    }
+}
+
+/* Android Chrome specific fixes */
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+    /* Fix for Android Chrome input styling */
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    input[type="date"],
+    textarea {
+        background-clip: padding-box;
+    }
+}
+
+/* Touch device optimizations */
+@media (hover: none) and (pointer: coarse) {
+    /* Remove hover effects on touch devices */
+    .hover-effect:hover {
+        transform: none;
+        box-shadow: none;
+    }
+
+    /* Enhanced touch targets */
+    button,
+    input[type="button"],
+    input[type="submit"],
+    .touch-target {
+        min-height: 44px;
+        min-width: 44px;
+        padding: 12px;
+    }
+
+    /* Touch feedback */
+    button:active,
+    .touch-target:active {
+        background-color: rgba(0, 0, 0, 0.1);
+        transform: scale(0.98);
+    }
+}
+
+/* High DPI display optimizations */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    /* Sharper borders on high DPI displays */
+    .sharp-border {
+        border-width: 0.5px;
+    }
+
+    /* Optimize font rendering */
+    body {
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        text-rendering: optimizeLegibility;
+    }
+}
+
+/* Landscape orientation optimizations */
+@media screen and (orientation: landscape) and (max-height: 500px) {
+    /* Reduce header height in landscape on mobile */
+    .mobile-header {
+        padding: 8px 16px;
+    }
+
+    /* Optimize form spacing in landscape */
+    .mobile-form-field {
+        margin-bottom: 12px;
+    }
+
+    /* Reduce font sizes slightly in landscape */
+    .mobile-text {
+        font-size: 14px;
+    }
+}
+
+/* Dark mode optimizations for mobile */
+@media (prefers-color-scheme: dark) and (max-width: 767px) {
+    /* Ensure good contrast on mobile dark mode */
+    input,
+    textarea {
+        background-color: #2d3748;
+        color: #e2e8f0;
+        border-color: #4a5568;
+    }
+
+    input:focus,
+    textarea:focus {
+        border-color: #63b3ed;
+        box-shadow: 0 0 0 3px rgba(99, 179, 237, 0.3);
+    }
+}
+
+/* Reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+    /* Remove all animations and transitions */
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+
+    /* Remove transform effects */
+    .hover-effect:hover,
+    .touch-target:active {
+        transform: none !important;
+    }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    /* Enhance borders and outlines */
+    input,
+    textarea,
+    button {
+        border-width: 2px;
+        border-style: solid;
+    }
+
+    /* Ensure focus indicators are visible */
+    :focus {
+        outline: 3px solid;
+        outline-offset: 2px;
+    }
+
+    /* Remove subtle shadows in high contrast */
+    .shadow,
+    .shadow-sm,
+    .shadow-md {
+        box-shadow: none;
+        border: 2px solid;
+    }
+}
+
+/* Print optimizations for mobile */
+@media print {
+    /* Ensure mobile-optimized print layout */
+    .mobile-print-hide {
+        display: none !important;
+    }
+
+    .mobile-print-full-width {
+        width: 100% !important;
+        max-width: none !important;
+    }
+
+    /* Optimize font sizes for print */
+    body {
+        font-size: 12pt;
+        line-height: 1.4;
+    }
+
+    h1 {
+        font-size: 18pt;
+    }
+    h2 {
+        font-size: 16pt;
+    }
+    h3 {
+        font-size: 14pt;
+    }
+}
+
+/* Network-aware optimizations */
+@media (prefers-reduced-data: reduce) {
+    /* Reduce visual effects for slow connections */
+    .shadow,
+    .shadow-sm,
+    .shadow-md,
+    .shadow-lg {
+        box-shadow: none;
+    }
+
+    /* Disable non-essential animations */
+    .fade-in,
+    .slide-in,
+    .bounce {
+        animation: none;
+    }
+}
+
+/* Accessibility enhancements for mobile */
+@media (max-width: 767px) {
+    /* Larger focus indicators on mobile */
+    :focus-visible {
+        outline: 3px solid var(--color-primary);
+        outline-offset: 3px;
+    }
+
+    /* Ensure sufficient color contrast */
+    .text-secondary {
+        color: #4a5568; /* Darker for better contrast */
+    }
+
+    /* Improve readability */
+    .mobile-readable {
+        font-size: 16px;
+        line-height: 1.6;
+        letter-spacing: 0.01em;
+    }
+
+    /* Skip links for keyboard navigation */
+    .skip-link {
+        position: absolute;
+        top: -40px;
+        left: 6px;
+        background: var(--color-primary);
+        color: white;
+        padding: 8px;
+        text-decoration: none;
+        border-radius: 4px;
+        z-index: 1000;
+    }
+
+    .skip-link:focus {
+        top: 6px;
+    }
+}
+
+/* Performance optimizations */
+@media (max-width: 767px) {
+    /* Use transform3d for hardware acceleration */
+    .mobile-accelerated {
+        transform: translate3d(0, 0, 0);
+        backface-visibility: hidden;
+    }
+
+    /* Optimize scrolling performance */
+    .mobile-scroll {
+        -webkit-overflow-scrolling: touch;
+        overflow-scrolling: touch;
+    }
+
+    /* Reduce repaints */
+    .mobile-optimized {
+        will-change: transform;
+    }
+}
+
+/* Safe area insets for devices with notches */
+@supports (padding: max(0px)) {
+    .safe-area-inset-top {
+        padding-top: max(16px, env(safe-area-inset-top));
+    }
+
+    .safe-area-inset-bottom {
+        padding-bottom: max(16px, env(safe-area-inset-bottom));
+    }
+
+    .safe-area-inset-left {
+        padding-left: max(16px, env(safe-area-inset-left));
+    }
+
+    .safe-area-inset-right {
+        padding-right: max(16px, env(safe-area-inset-right));
+    }
+}
+
+/* Viewport meta tag enforcement through CSS */
+@viewport {
+    width: device-width;
+    initial-scale: 1;
+    maximum-scale: 5;
+    user-scalable: yes;
+}

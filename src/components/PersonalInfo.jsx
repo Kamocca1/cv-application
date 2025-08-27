@@ -97,6 +97,7 @@ const PersonalInfo = ({
         if (!hasData) {
             return (
                 <div className={styles.emptyState}>
+                    <div className={styles.emptyStateIcon}>👤</div>
                     <div className={styles.emptyStateText}>
                         No personal information added yet
                     </div>
