@@ -70,57 +70,7 @@ const EditableSection = ({
         return !hasErrors;
     }, [localData, validationRules, validateField]);
 
-    // Handle field changes
-    const handleFieldChange = useCallback(
-        (fieldName, value) => {
-            const newData = { ...localData, [fieldName]: value };
-            setLocalData(newData);
-
-            // Clear validation error for this field
-            if (validationErrors[fieldName]) {
-                setValidationErrors((prev) => {
-                    const newErrors = { ...prev };
-                    delete newErrors[fieldName];
-                    return newErrors;
-                });
-            }
-
-            // Auto-save functionality
-            if (autoSave && isEditing) {
-                if (autoSaveTimeout) {
-                    clearTimeout(autoSaveTimeout);
-                }
-
-                const timeout = setTimeout(() => {
-                    const isValid = validateAllFields();
-                    if (isValid) {
-                        handleSave(newData, true); // Silent auto-save
-                    }
-                }, autoSaveDelay);
-
-                setAutoSaveTimeout(timeout);
-            }
-        },
-        [
-            localData,
-            validationErrors,
-            autoSave,
-            isEditing,
-            autoSaveTimeout,
-            autoSaveDelay,
-            validateAllFields,
-        ]
-    );
-
-    // Handle edit mode
-    const handleEdit = useCallback(() => {
-        if (disabled) return;
-        setIsEditing(true);
-        setLocalData(data);
-        setValidationErrors({});
-    }, [data, disabled]);
-
-    // Handle save
+    // Handle save (defined early to avoid hoisting issues)
     const handleSave = useCallback(
         async (dataToSave = localData, silent = false) => {
             if (!silent) {
@@ -158,6 +108,60 @@ const EditableSection = ({
         },
         [localData, validateAllFields, onSave]
     );
+
+    // Handle field changes
+    const handleFieldChange = useCallback(
+        (fieldName, value) => {
+            const newData = { ...localData, [fieldName]: value };
+            setLocalData(newData);
+
+            // Real-time validation for the changed field
+            const fieldError = validateField(fieldName, value);
+            setValidationErrors((prev) => {
+                const newErrors = { ...prev };
+                if (fieldError) {
+                    newErrors[fieldName] = fieldError;
+                } else {
+                    delete newErrors[fieldName];
+                }
+                return newErrors;
+            });
+
+            // Auto-save functionality
+            if (autoSave && isEditing) {
+                if (autoSaveTimeout) {
+                    clearTimeout(autoSaveTimeout);
+                }
+
+                const timeout = setTimeout(() => {
+                    const isValid = validateAllFields();
+                    if (isValid) {
+                        handleSave(newData, true); // Silent auto-save
+                    }
+                }, autoSaveDelay);
+
+                setAutoSaveTimeout(timeout);
+            }
+        },
+        [
+            localData,
+            validateField,
+            autoSave,
+            isEditing,
+            autoSaveTimeout,
+            autoSaveDelay,
+            validateAllFields,
+            handleSave,
+        ]
+    );
+
+    // Handle edit mode
+    const handleEdit = useCallback(() => {
+        if (disabled) return;
+        setIsEditing(true);
+        setLocalData(data);
+        setValidationErrors({});
+    }, [data, disabled]);
 
     // Handle cancel
     const handleCancel = useCallback(() => {

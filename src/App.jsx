@@ -12,8 +12,10 @@ import "./App.css";
  * - Coordinates between CVBuilder and any future routing/navigation
  */
 function App() {
+    // Debug: Add console log to see if App component is rendering
+    console.log("App component is rendering");
     // Application-level state
-    const [appConfig, setAppConfig] = useState({
+    const [appConfig] = useState({
         autoSave: true,
         autoSaveDelay: 2000,
         theme: "light", // Future enhancement for theme switching
@@ -38,9 +40,7 @@ function App() {
         }));
 
         // Log data changes for debugging (can be removed in production)
-        if (process.env.NODE_ENV === "development") {
-            console.log("CV data updated:", data);
-        }
+        console.log("CV data updated:", data);
 
         // Future: Could add analytics tracking, cloud sync, etc.
     }, []);

@@ -14,6 +14,7 @@ import {
     validateDate,
     validateDateRange,
     validateResponsibilities,
+    validateText,
 } from "../utils/validation.js";
 import styles from "../styles/WorkExperience.module.css";
 
@@ -256,6 +257,11 @@ const WorkExperience = ({
                                         }
                                         placeholder="Enter company name"
                                         required
+                                        validator={(value) =>
+                                            validateText(value, 2, 100)
+                                        }
+                                        validateOnBlur={true}
+                                        validateOnChange={false}
                                         className={styles.companyField}
                                     />
 
@@ -280,6 +286,11 @@ const WorkExperience = ({
                                         }
                                         placeholder="e.g., Software Engineer"
                                         required
+                                        validator={(value) =>
+                                            validateText(value, 2, 100)
+                                        }
+                                        validateOnBlur={true}
+                                        validateOnChange={false}
                                         className={styles.positionField}
                                     />
                                 </div>
@@ -310,6 +321,9 @@ const WorkExperience = ({
                                                 WORK_EXPERIENCE_FIELDS.END_DATE
                                             ] || undefined
                                         }
+                                        validator={validateDate}
+                                        validateOnBlur={true}
+                                        validateOnChange={false}
                                         className={styles.startDateField}
                                     />
 
@@ -348,6 +362,9 @@ const WorkExperience = ({
                                                         .START_DATE
                                                 ] || undefined
                                             }
+                                            validator={validateDate}
+                                            validateOnBlur={true}
+                                            validateOnChange={false}
                                             className={styles.endDateField}
                                         />
                                     )}
@@ -412,6 +429,9 @@ const WorkExperience = ({
                                         required
                                         rows={4}
                                         maxLength={2000}
+                                        validator={validateResponsibilities}
+                                        validateOnBlur={true}
+                                        validateOnChange={false}
                                         className={
                                             styles.responsibilitiesTextArea
                                         }

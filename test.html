@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Test</title>
+    </head>
+    <body>
+        <h1>Test Page</h1>
+        <p>If you can see this, the server is working.</p>
+        <script>
+            console.log("JavaScript is working");
+            fetch("http://localhost:5173/")
+                .then((response) => response.text())
+                .then((html) => {
+                    console.log("Vite server response length:", html.length);
+                    if (html.includes("script")) {
+                        console.log("HTML contains script tags");
+                    } else {
+                        console.log("HTML does not contain script tags");
+                    }
+                })
+                .catch((error) => {
+                    console.error("Error fetching from Vite server:", error);
+                });
+        </script>
+    </body>
+</html>

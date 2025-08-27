@@ -155,6 +155,128 @@ export const validateResponsibilities = (responsibilities) => {
 };
 
 /**
+ * Validates multiple fields and returns combined errors
+ * @param {Object} data - The data object to validate
+ * @param {Object} rules - Validation rules mapping field names to validators
+ * @returns {Object} Object containing field names as keys and error messages as values
+ */
+export const validateMultipleFields = (data, rules) => {
+    const errors = {};
+
+    Object.keys(rules).forEach((fieldName) => {
+        const rule = rules[fieldName];
+        const value = data[fieldName];
+
+        if (typeof rule === "function") {
+            const error = rule(value);
+            if (error) {
+                errors[fieldName] = error;
+            }
+        }
+    });
+
+    return errors;
+};
+
+/**
+ * Validates that all required fields are present and valid
+ * @param {Object} data - The data object to validate
+ * @param {Array} requiredFields - Array of required field names
+ * @returns {Array} Array of error messages for missing required fields
+ */
+export const validateRequiredFields = (data, requiredFields) => {
+    const errors = [];
+
+    requiredFields.forEach((fieldName) => {
+        const value = data[fieldName];
+        const error = validateRequired(value);
+        if (error) {
+            errors.push(`${fieldName}: ${error}`);
+        }
+    });
+
+    return errors;
+};
+
+/**
+ * Enhanced date range validation with custom error messages
+ * @param {string} startDate - The start date
+ * @param {string} endDate - The end date
+ * @param {string} startLabel - Label for start date field
+ * @param {string} endLabel - Label for end date field
+ * @returns {Object} Object with startDate and endDate error messages
+ */
+export const validateDateRangeFields = (
+    startDate,
+    endDate,
+    startLabel = "Start date",
+    endLabel = "End date"
+) => {
+    const errors = {};
+
+    // Validate individual dates first
+    const startError = validateDate(startDate);
+    const endError = validateDate(endDate);
+
+    if (startError) {
+        errors.startDate = startError;
+    }
+
+    if (endError) {
+        errors.endDate = endError;
+    }
+
+    // Only validate range if both dates are valid
+    if (!startError && !endError && startDate && endDate) {
+        const rangeError = validateDateRange(startDate, endDate);
+        if (rangeError) {
+            errors.endDate = `${endLabel} must be after ${startLabel.toLowerCase()}`;
+        }
+    }
+
+    return errors;
+};
+
+/**
+ * Validates form data with comprehensive error reporting
+ * @param {Object} data - The form data to validate
+ * @param {Object} validationSchema - Schema defining validation rules
+ * @returns {Object} Validation result with isValid flag and errors object
+ */
+export const validateFormData = (data, validationSchema) => {
+    const errors = {};
+    let isValid = true;
+
+    // Validate individual fields
+    Object.keys(validationSchema).forEach((fieldName) => {
+        const rule = validationSchema[fieldName];
+        const value = data[fieldName];
+
+        if (typeof rule === "function") {
+            const error = rule(value);
+            if (error) {
+                errors[fieldName] = error;
+                isValid = false;
+            }
+        } else if (typeof rule === "object" && rule.validator) {
+            const error = rule.validator(value);
+            if (error) {
+                errors[fieldName] = error;
+                isValid = false;
+            }
+        }
+    });
+
+    return {
+        isValid,
+        errors,
+        hasErrors: !isValid,
+        errorCount: Object.keys(errors).length,
+        firstError: Object.values(errors)[0] || null,
+    };
+};
+
+/**
  * Validation rules mapping for different field types
  */
 export const VALIDATION_RULES = {

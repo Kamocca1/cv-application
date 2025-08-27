@@ -55,6 +55,9 @@ const PersonalInfo = ({
                     placeholder="Enter your full name"
                     required
                     error={validationErrors[PERSONAL_INFO_FIELDS.NAME]}
+                    validator={validateName}
+                    validateOnBlur={true}
+                    validateOnChange={false}
                     className={styles.nameField}
                 />
 
@@ -68,6 +71,9 @@ const PersonalInfo = ({
                     placeholder="your.email@example.com"
                     required
                     error={validationErrors[PERSONAL_INFO_FIELDS.EMAIL]}
+                    validator={validateEmail}
+                    validateOnBlur={true}
+                    validateOnChange={false}
                     className={styles.emailField}
                 />
 
@@ -81,6 +87,9 @@ const PersonalInfo = ({
                     placeholder="+1 (555) 123-4567"
                     required
                     error={validationErrors[PERSONAL_INFO_FIELDS.PHONE]}
+                    validator={validatePhone}
+                    validateOnBlur={true}
+                    validateOnChange={false}
                     className={styles.phoneField}
                 />
             </div>

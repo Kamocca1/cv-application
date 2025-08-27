@@ -12,6 +12,7 @@ import {
     validateRequired,
     validateDate,
     validateDateRange,
+    validateText,
 } from "../utils/validation.js";
 import styles from "../styles/Education.module.css";
 
@@ -210,6 +211,11 @@ const Education = ({
                                     }
                                     placeholder="Enter school or university name"
                                     required
+                                    validator={(value) =>
+                                        validateText(value, 2, 100)
+                                    }
+                                    validateOnBlur={true}
+                                    validateOnChange={false}
                                     className={styles.schoolField}
                                 />
 
@@ -229,6 +235,11 @@ const Education = ({
                                     }
                                     placeholder="e.g., Bachelor of Science in Computer Science"
                                     required
+                                    validator={(value) =>
+                                        validateText(value, 2, 200)
+                                    }
+                                    validateOnBlur={true}
+                                    validateOnChange={false}
                                     className={styles.titleField}
                                 />
 
@@ -252,6 +263,9 @@ const Education = ({
                                             entry[EDUCATION_FIELDS.END_DATE] ||
                                             undefined
                                         }
+                                        validator={validateDate}
+                                        validateOnBlur={true}
+                                        validateOnChange={false}
                                         className={styles.startDateField}
                                     />
 
@@ -273,6 +287,9 @@ const Education = ({
                                                 EDUCATION_FIELDS.START_DATE
                                             ] || undefined
                                         }
+                                        validator={validateDate}
+                                        validateOnBlur={true}
+                                        validateOnChange={false}
                                         className={styles.endDateField}
                                     />
                                 </div>
